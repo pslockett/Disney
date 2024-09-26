@@ -38,13 +38,13 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
             width: 60%;
             margin-top: 20px;
+            font-size: 2rem;
+            letter-spacing: 1.5px;
         }
 
         /* Countdown Number Style */
         .timer-container p {
-            font-size: 3rem;
             font-weight: bold;
-            letter-spacing: 2px;
             color: #FFD700;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
         }
@@ -59,6 +59,23 @@
             }
         }
 
+        /* Timer Digit Styles */
+        .time-box {
+            display: inline-block;
+            margin: 0 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .time-box span {
+            font-size: 3rem;
+            color: #FFD700;
+            display: block;
+        }
+
         /* Footer Style */
         footer {
             position: absolute;
@@ -68,6 +85,15 @@
             font-size: 1rem;
             color: #FFD700;
         }
+
+        /* Style for labels (days, hours, etc.) */
+        .label {
+            font-size: 1.2rem;
+            color: #fff;
+            display: block;
+            margin-top: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -77,7 +103,22 @@
 
     <!-- Countdown Timer Container -->
     <div class="timer-container">
-        <p id="countdown"></p>
+        <div class="time-box">
+            <span id="days">00</span>
+            <div class="label">Days</div>
+        </div>
+        <div class="time-box">
+            <span id="hours">00</span>
+            <div class="label">Hours</div>
+        </div>
+        <div class="time-box">
+            <span id="minutes">00</span>
+            <div class="label">Minutes</div>
+        </div>
+        <div class="time-box">
+            <span id="seconds">00</span>
+            <div class="label">Seconds</div>
+        </div>
     </div>
 
     <!-- Footer for Extra Touch -->
@@ -87,27 +128,37 @@
 
     <!-- Countdown Timer Script -->
     <script>
-        function countdownTimer(targetDate, elementId) {
-            const target = new Date(targetDate).getTime();
+        function countdownTimer() {
+            // Set the target date for The Woodlands, TX (Central Time, UTC-6 or UTC-5 for DST)
+            const targetDate = new Date("Nov 30, 2024 00:00:00 GMT-0600").getTime();
 
-            setInterval(function() {
+            // Update the countdown every 1 second
+            const timerInterval = setInterval(function() {
                 const now = new Date().getTime();
-                const distance = target - now;
+                const distance = targetDate - now;
 
+                // Time calculations for days, hours, minutes, and seconds
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                // Display the result in the element with id="countdown"
-                document.getElementById(elementId).innerHTML = `${days} days until Disney!`;
+                // Display the result in the respective elements
+                document.getElementById("days").innerHTML = days;
+                document.getElementById("hours").innerHTML = hours;
+                document.getElementById("minutes").innerHTML = minutes;
+                document.getElementById("seconds").innerHTML = seconds;
 
                 // If the countdown is finished
                 if (distance < 0) {
-                    document.getElementById(elementId).innerHTML = "The magic has begun!";
+                    clearInterval(timerInterval);
+                    document.querySelector(".timer-container").innerHTML = "The magic has begun!";
                 }
             }, 1000);
         }
 
-        // Initialize the Countdown for November 30, 2024
-        countdownTimer("Nov 30, 2024 00:00:00", "countdown");
+        // Initialize the countdown
+        countdownTimer();
     </script>
 
 </body>
