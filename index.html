@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disney Countdown Timers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 50px;
+        }
+        h1 {
+            color: #0073e6;
+        }
+        .timer-container {
+            margin: 20px;
+            font-size: 1.5em;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Disney Countdown</h1>
+
+    <!-- Countdown for November 30, 2024 -->
+    <div class="timer-container">
+        <h2>Countdown to November 30, 2024:</h2>
+        <p id="countdown1"></p>
+    </div>
+
+    <!-- Countdown for December 6, 2024 -->
+    <div class="timer-container">
+        <h2>Countdown to December 6, 2024:</h2>
+        <p id="countdown2"></p>
+    </div>
+
+    <script>
+        function countdownTimer(targetDate, elementId) {
+            const target = new Date(targetDate).getTime();
+
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = target - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById(elementId).innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+                if (distance < 0) {
+                    document.getElementById(elementId).innerHTML = "Event has passed!";
+                }
+            }, 1000);
+        }
+
+        countdownTimer("Nov 30, 2024 00:00:00", "countdown1");
+        countdownTimer("Dec 6, 2024 00:00:00", "countdown2");
+    </script>
+</body>
+</html>
