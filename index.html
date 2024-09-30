@@ -26,7 +26,7 @@
 
         /* H1 Style with Animation */
         h1 {
-            font-size: 4rem;
+            font-size: 8vw; /* Responsive text size based on viewport width */
             text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7);
             margin-bottom: 20px;
             animation: glow 1.5s ease-in-out infinite alternate;
@@ -35,16 +35,187 @@
         /* Countdown Timer Container Style */
         .timer-container {
             background: rgba(0, 0, 0, 0.6);
-            padding: 40px;
+            padding: 20px; /* Smaller padding for smaller screens */
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-            width: 60%;
+            width: 90%; /* Responsive width */
             margin-top: 20px;
-            font-size: 2rem;
+            font-size: 4vw; /* Responsive font size based on viewport width */
             letter-spacing: 1.5px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* This will allow items to wrap on smaller screens */
         }
 
         /* Countdown Number Style */
         .timer-container p {
             font-weight: bold;
-            color: #FFD700; /* Golden yellow for
+            color: #FFD700; /* Golden yellow for the countdown text */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Timer Digit Styles */
+        .time-box {
+            display: inline-block;
+            margin: 10px;
+            background-color: rgba(255, 255, 255, 0.2); /* Bright semi-transparent box */
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 100px;
+            flex: 1;
+        }
+
+        .time-box span {
+            font-size: 6vw; /* Responsive font size */
+            color: #FFD700;
+            display: block;
+        }
+
+        /* Footer Style */
+        footer {
+            position: relative; /* Make the footer responsive by adjusting the positioning */
+            margin-top: 20px;
+            font-size: 3vw; /* Responsive font size */
+            color: #FFD700;
+        }
+
+        /* Style for labels (days, hours, etc.) */
+        .label {
+            font-size: 2vw; /* Responsive label size */
+            color: #fff;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* Adding style for milliseconds */
+        .time-box-small {
+            display: inline-block;
+            margin: 10px;
+            background-color: rgba(255, 255, 255, 0.2); 
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 80px;
+            flex: 1;
+        }
+
+        .time-box-small span {
+            font-size: 4vw; /* Responsive font size for milliseconds */
+            color: #FFD700;
+            display: block;
+        }
+
+        /* Glow effect for heading */
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px #fff, 0 0 30px #FFD700, 0 0 40px #FF8C00, 0 0 50px #FF4500;
+            }
+            to {
+                text-shadow: 0 0 30px #fff, 0 0 40px #FFD700, 0 0 50px #FF8C00, 0 0 60px #FF4500;
+            }
+        }
+
+        /* Media query for small screens */
+        @media (max-width: 768px) {
+            .timer-container {
+                flex-direction: column; /* Stack timer elements on small screens */
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 12vw; /* Increase the heading size for small screens */
+            }
+
+            .time-box span {
+                font-size: 8vw; /* Larger digits for small screens */
+            }
+
+            .time-box-small span {
+                font-size: 6vw; /* Larger milliseconds digits for small screens */
+            }
+
+            footer {
+                font-size: 4vw;
+            }
+
+            .label {
+                font-size: 3vw; /* Increase label size for small screens */
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Disney Countdown Heading -->
+    <h1>Disney 2024 - Lockett's & Wilson's!</h1>
+
+    <!-- Countdown Timer Container -->
+    <div class="timer-container">
+        <div class="time-box">
+            <span id="days">00</span>
+            <div class="label">Days</div>
+        </div>
+        <div class="time-box">
+            <span id="hours">00</span>
+            <div class="label">Hours</div>
+        </div>
+        <div class="time-box">
+            <span id="minutes">00</span>
+            <div class="label">Minutes</div>
+        </div>
+        <div class="time-box">
+            <span id="seconds">00</span>
+            <div class="label">Seconds</div>
+        </div>
+        <div class="time-box-small">
+            <span id="milliseconds">000</span>
+            <div class="label">Milliseconds</div>
+        </div>
+    </div>
+
+    <!-- Footer for Extra Touch -->
+    <footer>
+        Magic Awaits! ✨ See you soon at the Happiest Place on Earth! 🎠🏰
+    </footer>
+
+    <!-- Countdown Timer Script -->
+    <script>
+        function countdownTimer() {
+            // Set the target date for the countdown (November 29, 2024, 4:00 PM)
+            const targetDate = new Date("Nov 29, 2024 16:00:00 GMT-0600").getTime();
+
+            // Update the countdown every 10 milliseconds
+            const timerInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                // Time calculations for days, hours, minutes, seconds, and milliseconds
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                const milliseconds = Math.floor(distance % 1000);
+
+                // Display the result in the respective elements
+                document.getElementById("days").innerHTML = days;
+                document.getElementById("hours").innerHTML = hours;
+                document.getElementById("minutes").innerHTML = minutes;
+                document.getElementById("seconds").innerHTML = seconds;
+                document.getElementById("milliseconds").innerHTML = milliseconds;
+
+                // If the countdown is finished
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    document.querySelector(".timer-container").innerHTML = "The magic has begun!";
+                }
+            }, 10);
+        }
+
+        // Initialize the countdown
+        countdownTimer();
+    </script>
+
+</body>
+</html>
