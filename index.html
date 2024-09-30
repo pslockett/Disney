@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disney 2024 - Lockett's & Wilson's!</title>
-    
     <style>
         /* General Body Styles */
         body {
             font-family: 'Disney', sans-serif;
-            background-image: url('Disney2023.jpeg'); /* Make sure the image is in the same directory */
+            background-image: url('Disney2023.jpeg'); /* Ensure this image is in the same directory as your index.html */
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: #fff;
             text-align: center;
             margin: 0;
@@ -64,4 +65,103 @@
         .time-box {
             display: inline-block;
             margin: 0 10px;
-            background-color: rgba(
+            background-color: rgba(255, 255, 255, 0.2); /* Bright semi-transparent box */
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .time-box span {
+            font-size: 3rem;
+            color: #FFD700;
+            display: block;
+        }
+
+        /* Footer Style */
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            color: #FFD700;
+        }
+
+        /* Style for labels (days, hours, etc.) */
+        .label {
+            font-size: 1.2rem;
+            color: #fff;
+            display: block;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Disney Countdown Heading -->
+    <h1>Disney 2024 - Lockett's & Wilson's!</h1>
+
+    <!-- Countdown Timer Container -->
+    <div class="timer-container">
+        <div class="time-box">
+            <span id="days">00</span>
+            <div class="label">Days</div>
+        </div>
+        <div class="time-box">
+            <span id="hours">00</span>
+            <div class="label">Hours</div>
+        </div>
+        <div class="time-box">
+            <span id="minutes">00</span>
+            <div class="label">Minutes</div>
+        </div>
+        <div class="time-box">
+            <span id="seconds">00</span>
+            <div class="label">Seconds</div>
+        </div>
+    </div>
+
+    <!-- Footer for Extra Touch -->
+    <footer>
+        Magic Awaits! ✨ See you soon at the Happiest Place on Earth! 🎠🏰
+    </footer>
+
+    <!-- Countdown Timer Script -->
+    <script>
+        function countdownTimer() {
+            // Set the target date for The Woodlands, TX (Central Time, UTC-6 or UTC-5 for DST)
+            const targetDate = new Date("Nov 30, 2024 00:00:00 GMT-0600").getTime();
+
+            // Update the countdown every 1 second
+            const timerInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                // Time calculations for days, hours, minutes, and seconds
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the respective elements
+                document.getElementById("days").innerHTML = days;
+                document.getElementById("hours").innerHTML = hours;
+                document.getElementById("minutes").innerHTML = minutes;
+                document.getElementById("seconds").innerHTML = seconds;
+
+                // If the countdown is finished
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    document.querySelector(".timer-container").innerHTML = "The magic has begun!";
+                }
+            }, 1000);
+        }
+
+        // Initialize the countdown
+        countdownTimer();
+    </script>
+
+</body>
+</html>
