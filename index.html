@@ -102,17 +102,6 @@
             }
         }
 
-        /* Weather Forecast Style */
-        #weather-forecast {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        #weather-forecast div {
-            margin: 10px;
-            text-align: center;
-        }
-
     </style>
 </head>
 <body>
@@ -148,7 +137,6 @@
     <footer>
         Magic Awaits! ✨ See you soon at the Happiest Place on Earth! 🎠🏰
     </footer>
-    <div id="weather-forecast" style="text-align: center;"></div>
 
     <!-- Countdown Timer Script -->
     <script>
@@ -185,59 +173,6 @@
 
         // Initialize the countdown
         countdownTimer();
-    </script>
-    
-    <!-- Weather Forecast Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            const apiKey = '29029db59982ca52a8af42206c424380';
-            const orlandoCoords = { lat: 28.5383, lon: -81.3792 };
-            const houstonCoords = { lat: 29.7604, lon: -95.3698 };
-            const startDate = moment('2024-11-29');
-            const endDate = moment('2024-12-06');
-            const weatherContainer = $('#weather-forecast');
-
-            function fetchWeather(coords, date, callback) {
-                const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon}&exclude=minutely,hourly&appid=${apiKey}&units=imperial`;
-                
-                $.getJSON(url, function(data) {
-                    const dailyWeather = data.daily.find(day => moment.unix(day.dt).isSame(date, 'day'));
-                    const weatherInfo = {
-                        date: date.format('MMMM Do, YYYY'),
-                        temp: dailyWeather.temp.day,
-                        description: dailyWeather.weather[0].description,
-                        icon: dailyWeather.weather[0].icon
-                    };
-                    callback(weatherInfo);
-                });
-            }
-
-            function displayWeather(info, location) {
-                const weatherHtml = `
-                    <div style="margin-bottom: 20px;">
-                        <h3>${info.date} - ${location}</h3>
-                        <img src="https://openweathermap.org/img/wn/${info.icon}@2x.png" alt="${info.description}">
-                        <p>${info.description}, ${info.temp}°F</p>
-                    </div>
-                `;
-                weatherContainer.append(weatherHtml);
-            }
-
-            let currentDate = startDate.clone();
-            while (currentDate.isSameOrBefore(endDate)) {
-                fetchWeather(orlandoCoords, currentDate, function(info) {
-                    displayWeather(info, 'Orlando, FL');
-                    if (currentDate.isSame(endDate)) {
-                        fetchWeather(houstonCoords, currentDate, function(houstonInfo) {
-                            displayWeather(houstonInfo, 'Houston, TX (after 7:10 PM)');
-                        });
-                    }
-                });
-                currentDate.add(1, 'days');
-            }
-        });
     </script>
 
 </body>
